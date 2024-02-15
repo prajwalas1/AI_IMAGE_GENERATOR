@@ -1,45 +1,43 @@
-import React, { useState, useRef } from 'react';
-import './ImageGenerator.css';
+import React, { useRef, useState } from 'react';
 import default_image from '../Assets/default_image.svg';
-
+import "./ImageGenerator.css";
 const ImageGenerator = () => {
-  const [image_url, setImage_url] = useState('/');
-  let inputRef = useRef(null);
-  const [loading , setLoading] = useState(false);
 
-  const imageGenerator = async () => {
-    if (inputRef.current.value === '') {
-      return 0 ;
-    }
-    setLoading(true);
-      const response = await fetch(
-        'https://api.openai.com/v1/images/generations',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization:
-              'Bearer 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',
-            'User-Agent': 'Chrome',
-          },
-          body: JSON.stringify({
-            prompt: `${inputRef.current.value}`,
-            n: 2,
-            size: '512x512',
-          }),
-        }
-      ); 
-      
-      let data = await response.json();
-       let data_array = data.data;
-       setImage_url(data_array[0].url);
-       setLoading(false);
-        
-       
-  }
+  const [image_url , setImage_url] = useState("/");
+   let inputRef = useRef(null);
+   const [loading , setLoading] = useState(false);
 
+   const imageGenerator = async() => {
+     if(inputRef.current.value==="") {
+       return 0;
+     }
+     setLoading(true);
+     const response = await fetch(
+      "https://api.openai.com/v1/images/generations",
+      {
+        method: 'POST',
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:
+         " Bearer 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",
+         'User-Agent':'Chrome',
 
-  return (
+        },
+        body:JSON.stringify(
+          {
+            prompt:`${inputRef.current.value}`,
+            n:1,
+            size:"512x512",
+          }
+        ),
+      }
+     );
+     let data = await response.json();
+      let data_array = data.data;
+      setImage_url(data_array[0].url);
+   }
+   
+   return (
     <div className="ai-image-generator">
       <div className="header">
         Ai image <span> generator</span>
